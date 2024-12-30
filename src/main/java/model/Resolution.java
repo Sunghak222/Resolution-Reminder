@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Resolution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long resID;
+    private Long resId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -37,6 +37,12 @@ public class Resolution {
     }
 
     //Getters and Setters
+    public Long getResId() {
+        return resId;
+    }
+    public void setResID(Long resId) {
+        this.resId = resId;
+    }
     public Account getAuthor() {
         return author;
     }
