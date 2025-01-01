@@ -4,13 +4,17 @@ import model.Account;
 import model.Resolution;
 import repository.ResolutionRepository;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class ResolutionService {
     private final ResolutionRepository resolutionRepository;
+    private final AccountService accountService;
 
-    public ResolutionService(ResolutionRepository resolutionRepository) {
+    public ResolutionService(ResolutionRepository resolutionRepository, AccountService accountService) {
         this.resolutionRepository = resolutionRepository;
+        this.accountService = accountService;
     }
 
     // Create
@@ -22,23 +26,52 @@ public class ResolutionService {
         }
         return resolutionRepository.save(resolution);
     }
-    public Optional<Resolution> getResolutionsByAuthor(Account author) {
-        return resolutionRepository.findByAuthor(author);
+
+    // Get
+    public Optional<Resolution> getResolutionById(Long id) {
+        return resolutionRepository.findById(id);
     }
+
+    public List<Resolution> getResolutionsByAuthor(Account author) {
+        return resolutionRepository.findAllByAuthor(author);
+    }
+
+    public List<Resolution> getResolutionsByAuthorId(Long authorId) {
+        try {
+            Account author = accountService.getAccountById(authorId);
+            return resolutionRepository.findAllByAuthor(author);
+        }
+        catch (IllegalArgumentException e) {
+            return Collections.emptyList();
+        }
+    }
+
     //Update
-    public boolean updateResolution(Resolution resolution) {
-        if (resolutionRepository.existsById(resolution.getResId())) {
-            resolutionRepository.save(resolution);
-            return true;
+    public Resolution updateResolution(Resolution updatedResolution) {
+        Resolution resolution = resolutionRepository.findById(updatedResolution.getResId())
+                .orElseThrow(() -> new IllegalArgumentException("Resolution not found with ID: " + updatedResolution.getResId()));
+
+        if (updatedResolution.getContent() != null) {
+            resolution.setContent(updatedResolution.getContent());
         }
-        return false;
+        if (updatedResolution.getSendDate() != null) {
+            resolution.setSendDate(updatedResolution.getSendDate());
+        }
+        if (updatedResolution.getWrittenDate() != null) {
+            resolution.setWrittenDate(updatedResolution.getWrittenDate());
+        }
+        if (updatedResolution.getAuthor() != null) {
+            resolution.setAuthor(updatedResolution.getAuthor());
+        }
+        resolution.setSent(updatedResolution.isSent());
+
+        return resolutionRepository.save(resolution);
     }
+
     //Delete
-    public boolean deleteResolution(Resolution resolution) {
-        if (resolutionRepository.existsById(resolution.getResId())) {
-            resolutionRepository.deleteById(resolution.getResId());
-            return true;
-        }
-        return false;
+    public void deleteResolution(Long id) {
+        Resolution resolution = resolutionRepository.findById(id)
+                        .orElseThrow(() -> new IllegalArgumentException("Resolution not found with ID: " + id));
+        resolutionRepository.deleteById(id);
     }
 }

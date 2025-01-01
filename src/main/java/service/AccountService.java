@@ -18,28 +18,45 @@ public class AccountService {
             throw new IllegalArgumentException("Account cannot have a null value.");
         }
         if (accountRepository.existsByEmail(account.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new RuntimeException("Email already exists: " + account.getEmail());
         }
         return accountRepository.save(account);
     }
     public boolean existsAccount(Account account) {
         return accountRepository.existsById(account.getUserId());
     }
-    public Optional<Account> getAccountByEmail(String email) {
-        return accountRepository.findByEmail(email);
+
+    // Get
+    public Account getAccountById(Long id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found with ID: " + id));
     }
-    public boolean updateAccount(Account account) {
-        if (existsAccount(account)) {
-            accountRepository.save(account);
-            return true;
-        }
-        return false;
+    public Account getAccountByEmail(String email) {
+        return accountRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found with email: " + email));
     }
-    public boolean deleteAccount(Account account) {
-        if (existsAccount(account)) {
-            accountRepository.deleteById(account.getUserId());
-            return true;
+
+    // Update
+    public Account updateAccount(Account account) {
+        Account updatedAccount = accountRepository.findById(account.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Account not found with ID: " + account.getUserId()));
+        if (account.getEmail() != null) {
+            updatedAccount.setEmail(account.getEmail());
         }
-        return false;
+        if (account.getUserName() != null) {
+            updatedAccount.setUserName(account.getUserName());
+        }
+        if (account.getPassword() != null) {
+            updatedAccount.setPassword(account.getPassword());
+        }
+
+        return accountRepository.save(updatedAccount);
+    }
+
+    //Delete
+    public void deleteAccount(Long id) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found with ID: " + id));
+        accountRepository.deleteById(id);
     }
 }
