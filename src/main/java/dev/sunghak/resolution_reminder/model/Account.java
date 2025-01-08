@@ -1,15 +1,17 @@
-package model;
+package dev.sunghak.resolution_reminder.model;
 
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(nullable = false)
-    private String userName;
+    private String username;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -17,8 +19,8 @@ public class Account {
     @Column(nullable = false)
     private String password;
 
-    public Account(String userName, String email, String password) {
-        this.userName = userName;
+    public Account(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
@@ -28,17 +30,17 @@ public class Account {
     }
 
     //Getters and Setters
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
-    public void setUserId(Long userID) {
-        this.userId = userID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
     public String getEmail() {
         return email;

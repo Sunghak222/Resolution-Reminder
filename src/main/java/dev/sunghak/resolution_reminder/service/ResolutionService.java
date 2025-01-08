@@ -1,13 +1,15 @@
-package service;
+package dev.sunghak.resolution_reminder.service;
 
-import model.Account;
-import model.Resolution;
-import repository.ResolutionRepository;
+import dev.sunghak.resolution_reminder.model.Account;
+import dev.sunghak.resolution_reminder.model.Resolution;
+import org.springframework.stereotype.Service;
+import dev.sunghak.resolution_reminder.repository.ResolutionRepository;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ResolutionService {
     private final ResolutionRepository resolutionRepository;
     private final AccountService accountService;

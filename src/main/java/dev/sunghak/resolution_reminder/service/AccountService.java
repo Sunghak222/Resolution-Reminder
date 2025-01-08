@@ -1,10 +1,10 @@
-package service;
+package dev.sunghak.resolution_reminder.service;
 
-import model.Account;
-import repository.AccountRepository;
+import dev.sunghak.resolution_reminder.model.Account;
+import org.springframework.stereotype.Service;
+import dev.sunghak.resolution_reminder.repository.AccountRepository;
 
-import java.util.Optional;
-
+@Service
 public class AccountService {
     private final AccountRepository accountRepository;
 
@@ -14,7 +14,7 @@ public class AccountService {
 
     // Create Account
     public Account registerAccount(Account account) {
-        if (account == null || account.getEmail() == null || account.getUserName() == null) {
+        if (account == null || account.getEmail() == null || account.getUsername() == null) {
             throw new IllegalArgumentException("Account cannot have a null value.");
         }
         if (accountRepository.existsByEmail(account.getEmail())) {
@@ -43,8 +43,8 @@ public class AccountService {
         if (account.getEmail() != null) {
             updatedAccount.setEmail(account.getEmail());
         }
-        if (account.getUserName() != null) {
-            updatedAccount.setUserName(account.getUserName());
+        if (account.getUsername() != null) {
+            updatedAccount.setUsername(account.getUsername());
         }
         if (account.getPassword() != null) {
             updatedAccount.setPassword(account.getPassword());

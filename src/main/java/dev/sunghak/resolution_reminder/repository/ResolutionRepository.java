@@ -1,7 +1,7 @@
-package repository;
+package dev.sunghak.resolution_reminder.repository;
 
-import model.Account;
-import model.Resolution;
+import dev.sunghak.resolution_reminder.model.Account;
+import dev.sunghak.resolution_reminder.model.Resolution;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

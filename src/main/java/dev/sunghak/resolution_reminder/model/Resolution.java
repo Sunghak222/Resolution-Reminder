@@ -1,4 +1,4 @@
-package model;
+package dev.sunghak.resolution_reminder.model;
 
 import jakarta.persistence.*;
 
@@ -40,7 +40,7 @@ public class Resolution {
     public Long getResId() {
         return resId;
     }
-    public void setResID(Long resId) {
+    public void setResId(Long resId) {
         this.resId = resId;
     }
     public Account getAuthor() {

@@ -1,13 +1,11 @@
-package controller;
+package dev.sunghak.resolution_reminder.controller;
 
-import model.Account;
+import dev.sunghak.resolution_reminder.model.Account;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import service.AccountService;
-
-import java.util.Optional;
+import dev.sunghak.resolution_reminder.service.AccountService;
 
 @RestController
 @RequestMapping("/accounts")

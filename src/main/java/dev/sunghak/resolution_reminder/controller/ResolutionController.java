@@ -1,11 +1,10 @@
-package controller;
+package dev.sunghak.resolution_reminder.controller;
 
-import model.Account;
-import model.Resolution;
+import dev.sunghak.resolution_reminder.model.Resolution;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.ResolutionService;
+import dev.sunghak.resolution_reminder.service.ResolutionService;
 
 import java.util.List;
 import java.util.Optional;
